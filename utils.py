@@ -43,10 +43,6 @@ def build_prompt(context: str, question: str) -> str:
         "If the answer is not present in the context,\n"
         "reply exactly:\n\n"
         "I could not find the answer in the uploaded documents.\n\n"
-        "Context:\n"
-        + context
-        + "\n\nQuestion:\n"
-        + question
-        + "\n\nAnswer:"
+        "Context:\n" + context + "\n\nQuestion:\n" + question + "\n\nAnswer:"
     )
     return prompt
