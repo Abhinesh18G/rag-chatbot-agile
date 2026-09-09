@@ -1,15 +1,12 @@
 import fitz
 
-from langchain_text_splitters import (
-    RecursiveCharacterTextSplitter
-)
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 # --------------------------------------------------
 # Extract Text From PDF
 # --------------------------------------------------
 def extract_text_from_pdf(file_bytes: bytes) -> str:
-
     pdf = fitz.open(
         stream=file_bytes,
         filetype="pdf",
@@ -39,26 +36,17 @@ def chunk_text(text: str, chunk_size=500, chunk_overlap=50) -> list[str]:
 # --------------------------------------------------
 # Build RAG Prompt
 # --------------------------------------------------
-def build_prompt(
-    context: str,
-    question: str
-) -> str:
-
-    return f"""
-You are a helpful AI assistant.
-
-Answer ONLY from the context provided below.
-
-If the answer is not present in the context,
-reply exactly:
-
-I could not find the answer in the uploaded documents.
-
-Context:
-{context}
-
-Question:
-{question}
-
-Answer:
-"""
+def build_prompt(context: str, question: str) -> str:
+    prompt = (
+        "You are a helpful AI assistant.\n\n"
+        "Answer ONLY from the context provided below.\n\n"
+        "If the answer is not present in the context,\n"
+        "reply exactly:\n\n"
+        "I could not find the answer in the uploaded documents.\n\n"
+        "Context:\n"
+        + context
+        + "\n\nQuestion:\n"
+        + question
+        + "\n\nAnswer:"
+    )
+    return prompt
