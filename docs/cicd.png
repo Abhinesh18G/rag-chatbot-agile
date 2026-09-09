@@ -1,0 +1,43 @@
+┌─────────────────┐
+│   Developer     │
+│  Writes Code    │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│     GitHub      │
+│  Push to main   │
+└────────┬────────┘
+         │
+         ▼
+╔════════════════════════════╗
+║     GitHub Actions CI      ║
+╠════════════════════════════╣
+║  1. Checkout Code          ║
+║  2. Install Dependencies   ║
+║  3. Flake8                 ║
+║  4. Black Check            ║
+║  5. Pytest                 ║
+║  6. Docker Build           ║
+╚════════════╤═══════════════╝
+             │
+          All Green
+             │
+             ▼
+┌─────────────────────────┐
+│       Docker Hub        │
+│   Push Docker Image     │
+│   :latest + SHA tag    │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│         Render          │
+│    Deploy Web Service   │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│   Live RAG Chatbot      │
+│   rag-chatbot-agile     │
+└─────────────────────────┘
