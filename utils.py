@@ -46,3 +46,43 @@ def build_prompt(context: str, question: str) -> str:
         "Context:\n" + context + "\n\nQuestion:\n" + question + "\n\nAnswer:"
     )
     return prompt
+
+
+# --------------------------------------------------
+# Exam Prep Generator
+# --------------------------------------------------
+def build_exam_prep_prompt(
+    context: str,
+    question_count: int = 10,
+    difficulty: str = "Medium",
+) -> str:
+    return f"""
+You are an exam preparation assistant.
+
+Generate exactly {question_count} exam questions using ONLY
+the information provided in the study context below.
+
+Difficulty: {difficulty}
+
+Requirements:
+1. Include both short-answer and long-answer questions.
+2. For 10 questions, generate 5 short-answer and 5 long-answer questions.
+3. Number all questions from 1 to {question_count}.
+4. Provide a clear answer for every question.
+5. Base every answer strictly on the supplied context.
+6. Do not invent facts or introduce outside knowledge.
+7. If the context does not contain enough information,
+   state that clearly rather than guessing.
+8. Make questions relevant to exam preparation.
+
+Use this format for every question:
+
+Question [number] — [Short Answer / Long Answer]
+Question: [Write the question]
+Answer: [Write the answer]
+
+Study Context:
+{context}
+
+Generate the questions and answers now.
+"""
