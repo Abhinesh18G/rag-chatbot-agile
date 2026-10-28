@@ -330,7 +330,11 @@ st.markdown(
         box-shadow: 0 8px 28px rgba(44,207,202,.16); filter: brightness(1.08);
     }
     div.stButton > button:focus-visible,
-    div.stDownloadButton > button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+    div.stDownloadButton > button:focus-visible {
+        outline: 2px solid var(--cyan);
+        outline-offset: 3px;
+    }
 
     div.stButton > button[data-testid="stBaseButton-primary"],
     div.stFormSubmitButton > button[data-testid="stBaseButton-primaryFormSubmit"] {
@@ -380,7 +384,9 @@ st.markdown(
                                   100% { background-position: 200% 50%; } }
 
     @media (prefers-reduced-motion: reduce) {
-        *, *:before, *:after {
+        *,
+        *:before,
+        *:after {
             animation-duration: .01ms !important;
             animation-iteration-count: 1 !important;
             transition-duration: .01ms !important;
@@ -553,8 +559,12 @@ with st.sidebar:
 # --------------------------------------------------
 # Document processing
 # --------------------------------------------------
+
+
 def build_retriever(vector_db):
-    return vector_db.as_retriever(search_kwargs={"k": st.session_state.top_k})
+    return vector_db.as_retriever(
+        search_kwargs={"k": st.session_state.top_k}
+    )
 
 
 def process_files(uploaded_files):
