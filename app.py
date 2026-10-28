@@ -496,9 +496,7 @@ def extract_text_from_pptx(file_bytes):
 
             if getattr(shape, "has_table", False):
                 for row in shape.table.rows:
-                    parts.append(
-                        " | ".join(cell.text.strip() for cell in row.cells)
-                    )
+                    parts.append(" | ".join(cell.text.strip() for cell in row.cells))
 
         slide_text.append("\n".join(parts))
 
@@ -562,9 +560,7 @@ with st.sidebar:
 
 
 def build_retriever(vector_db):
-    return vector_db.as_retriever(
-        search_kwargs={"k": st.session_state.top_k}
-    )
+    return vector_db.as_retriever(search_kwargs={"k": st.session_state.top_k})
 
 
 def process_files(uploaded_files):
@@ -605,9 +601,9 @@ def process_files(uploaded_files):
             doc_info.append(
                 {
                     "name": uploaded_file.name,
-                    "type": "PDF"
-                    if uploaded_file.name.lower().endswith(".pdf")
-                    else "PPTX",
+                    "type": (
+                        "PDF" if uploaded_file.name.lower().endswith(".pdf") else "PPTX"
+                    ),
                     "size": uploaded_file.size,
                     "chunks": len(chunks),
                 }
@@ -641,9 +637,7 @@ def process_files(uploaded_files):
         st.session_state.quiz_answers = {}
         st.session_state.last_exam_answer = None
 
-        log_activity(
-            f"Processed {len(doc_info)} file(s) into {len(all_chunks)} chunks"
-        )
+        log_activity(f"Processed {len(doc_info)} file(s) into {len(all_chunks)} chunks")
 
         progress.progress(100, text="Your study materials are ready!")
         progress.empty()
@@ -879,7 +873,9 @@ def page_home():
 
 def page_upload():
     st.header("📂 Upload Documents")
-    st.caption("Add your PDF or PowerPoint notes. They are indexed so every tool can use them.")
+    st.caption(
+        "Add your PDF or PowerPoint notes. They are indexed so every tool can use them."
+    )
 
     left, right = st.columns([1.55, 1], gap="medium")
     with left:
@@ -1082,9 +1078,7 @@ Study context:
         answers = {}
 
         for index, item in enumerate(questions):
-            st.markdown(
-                f"**{index + 1} of {len(questions)} · {item['question']}**"
-            )
+            st.markdown(f"**{index + 1} of {len(questions)} · {item['question']}**")
 
             opts = item["options"]
 
@@ -1266,8 +1260,7 @@ def page_exam():
             st.warning("Describe the scenario first.")
 
         elif (
-            answer_type == "🧩 Scenario-Based Answer"
-            and not scenario_question.strip()
+            answer_type == "🧩 Scenario-Based Answer" and not scenario_question.strip()
         ):
             st.warning("Enter the question about your scenario.")
 
@@ -1307,7 +1300,9 @@ Write the answer now.
 
                     response = llm.invoke(prompt)
                     st.session_state.last_exam_answer = response.content
-                    log_activity(f"Generated a 10-mark answer ({answer_type[2:].strip()})")
+                    log_activity(
+                        f"Generated a 10-mark answer ({answer_type[2:].strip()})"
+                    )
 
                 except Exception:
                     st.error("Could not generate the answer. Please try again.")
@@ -1384,17 +1379,19 @@ def page_settings():
         if new_k != st.session_state.top_k:
             st.session_state.top_k = new_k
             if st.session_state.vector_db is not None:
-                st.session_state.retriever = build_retriever(
-                    st.session_state.vector_db
-                )
+                st.session_state.retriever = build_retriever(st.session_state.vector_db)
             st.toast("Retrieval setting updated")
 
     with st.container(border=True):
         st.markdown("**Reset**")
         if st.button("🗑️ Clear all materials and progress", use_container_width=True):
             for key in (
-                "retriever", "vector_db", "processed_files", "generated_quiz",
-                "quiz_answers", "last_exam_answer",
+                "retriever",
+                "vector_db",
+                "processed_files",
+                "generated_quiz",
+                "quiz_answers",
+                "last_exam_answer",
             ):
                 st.session_state[key] = defaults[key]
             st.session_state.documents = []
