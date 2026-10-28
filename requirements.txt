@@ -1,4 +1,4 @@
-streamlit==1.38.0
+streamlit==1.50.0
 pymupdf==1.24.10
 python-dotenv==1.0.1
 langchain-text-splitters==0.3.0
@@ -6,4 +6,4 @@ langchain-google-genai==2.0.1
 langchain-community==0.3.1
 chromadb==0.5.5
 chroma-hnswlib==0.7.6
-python-pptx
+python-pptx==1.0.2
